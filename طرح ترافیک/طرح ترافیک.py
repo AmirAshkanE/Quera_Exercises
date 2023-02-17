@@ -10,6 +10,7 @@ class User:
         self.car_list = []
         self.penalty_amount = 0
         self.balance_amount = 0
+        self.license_day_count = 1
 
 
 def day_counter(date):
@@ -48,6 +49,7 @@ def car_number_checker(car_number):
 user_list = []
 car_number_list = []
 car_dict = {}
+
 while is_running:
     command, *data = input().split()
 
@@ -94,7 +96,19 @@ while is_running:
                         print("PENALTY RECORDED")
                         user.penalty_amount += 100
     elif command == "BUY_LICENSE":
-        pass
+        for user in user_list:
+            if data[0] == user.user_name:
+                print("INVALID USERNAME")
+                break
+            elif data[1] not in car_number_list:
+                print("INVALID CAR PLATE")
+                break
+            elif user.user_name == data[0] and user.balance_amount < 70:
+                print("NO ENOUGH MONEY")
+                break
+            else:
+                print("BUY LICENSE DONE")
+                
     elif command == "ADD_BALANCE":
         if data[0] not in car_dict.keys():
             print("INVALID USERNAME")
